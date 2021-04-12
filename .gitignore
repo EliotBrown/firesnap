@@ -1,0 +1,9 @@
+node_modules
+lib
+.coverage
+coverage*
+.nyc_output
+.DS_Store
+package-lock.json
+**/*.log
+*firebase*

@@ -1,0 +1,11 @@
+sudo: false
+language: node_js
+node_js:
+  - '12'
+before_install:
+  - npm i codecov 
+install:
+  - npm config set package-lock false
+  - npm install
+after_success: 
+  npm run report-coverage

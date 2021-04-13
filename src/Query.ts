@@ -290,7 +290,13 @@ export class Query<T extends Model, GetOne extends boolean = false> {
                 if (value.constructor === Object && !Array.isArray(value)) {
                     for (const operator in value as []) {
                         let val = value[operator];
-                        if (isModelInstance(val)) {
+                        if (Array.isArray(val)) {
+                            val.forEach((item, i) => {
+                                if (isModelInstance(item)) {
+                                    val[i]= item.getRef();
+                                }
+                            });
+                        } else if (isModelInstance(val)) {
                             val = val.getRef();
                         }
                         if (Operators[operator] === undefined) {

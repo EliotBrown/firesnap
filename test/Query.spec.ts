@@ -304,6 +304,18 @@ describe('Query', () => {
                 .limit(5)
                 .get()
         );
+        // Array-contain-any with references.
+        compareResults(
+            await firestore.collection('test_posts')
+                .where('topics', 'array-contains-any', [firestore.doc('test_topics/topic-1')])
+                .limit(5)
+                .get()
+            ,
+            await Post.find({ topics: { $aca: [Topic.ref('topic-1')] } })
+                .limit(5)
+                .get()
+        );
+
     });
 
     it('should skip results before a specific value or model instance.', async () => {

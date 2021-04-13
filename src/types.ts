@@ -119,7 +119,7 @@ export type QueryWhere = {
     [x: string]: string | number | boolean | Model | DocumentReference | {
         [P in QueryAllOps]?:
         P extends QueryNumOps ? number | Date | Timestamp | GeoPoint :
-            P extends QueryArrOps ? string[] | number[] :
+            P extends QueryArrOps ? string[] | number[] | Model[]:
                 string | number | boolean | Date | Timestamp | Model | DocumentReference
     }
 };

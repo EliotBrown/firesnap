@@ -50,7 +50,9 @@ export class Validator {
                 rules.type = constructorName(value) as DataTypeString;
             }
             // Firestore FieldValue.
-            if (['NumericIncrementTransform', 'DeleteTransform'].includes(value.constructor.name)) {
+            if (['NumericIncrementTransform', 'DeleteTransform', 'ArrayUnionTransform',
+                'ArrayRemoveTransform', 'ServerTimestampTransform'].includes(value.constructor.name)
+            ) {
                 cleaned[field] = data[field];
                 continue;
             }
@@ -151,13 +153,13 @@ export class Validator {
                 const validate = ValidationRules[name];
                 if (rules[name]) {
                     let message: string;
-                    let constraint: number | boolean ;
+                    let constraint: number | boolean;
                     if (Array.isArray(rules[name])) {
                         constraint = rules[name][0];
                         message = rules[name][1];
                     } else {
                         constraint = rules[name];
-                        message = validate.message({ name: field, value: value, constraint: constraint as number});
+                        message = validate.message({ name: field, value: value, constraint: constraint as number });
                     }
                     if (!validate.validator(value, constraint)) {
                         errors[field] = message;
@@ -179,7 +181,7 @@ export class Validator {
                 }
             }
             // Admin rule.
-            if (rules.write === 'admin' && options.authValue !== null &&  
+            if (rules.write === 'admin' && options.authValue !== null &&
                 options.authValue !== undefined && options.authValue !== true
             ) {
                 errors[field] = 'Admin permission required';

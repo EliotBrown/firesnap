@@ -1,7 +1,7 @@
 {
   "name": "firesnap",
   "description": "ORM for Firestore",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": "Peter Brown <peter.eliot.brown@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",

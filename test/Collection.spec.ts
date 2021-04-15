@@ -75,6 +75,17 @@ describe('Collection', () => {
         expect(post.comments.every(e => e.id)).to.be.true;
     });
 
+    it('should add documents in a sub-collection', async function () {
+        if (!post || !post.getRef()) {
+            this.skip();
+        }
+        const collection = new Collection(Comment, `${post.getRef().path}/comments`);
+        await collection.add({ content: 'comment 3' });
+        const results = await collection.find().get();
+        expect(results.length).to.be.equal(post.comments.length + 1);
+    });
+
+
     it('should delete documents of a sub-collection', async function () {
         /**
          * Note: The actual documents deletion is tested via Model.delete() 
@@ -95,5 +106,9 @@ describe('Collection', () => {
         await collection.delete();
         expect(await collection.find().get()).to.be.empty;
     });
+
+    
+
+
 
 });

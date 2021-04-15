@@ -3,7 +3,7 @@ import { CollectionReference, WriteBatch } from '@google-cloud/firestore';
 import { Document } from './Document';
 import { Query } from './Query';
 import { Storage } from './Metadata';
-import { DeleteOptions, ModelConstructor, ModelData, QueryWhere, SaveOptions } from './types';
+import { DeleteOptions, ModelConstructor, ModelData, QueryWhere, SaveOptions, SaveParams } from './types';
 import { Firesnap } from './Firesnap';
 import { constructorName, isModelInstance } from './utils';
 import { Model } from './Model';
@@ -70,7 +70,14 @@ export class Collection<T extends Model> extends Array {
 
     async add(data: ModelData, options: SaveOptions = {}): Promise<T> {
         const model = new this.model(data);
-        await model.save(options);
+        const params: Partial<SaveParams> = options;
+        if (this.path.indexOf('/') > 0) {
+            const paths = this.path.split('/');
+            const field = paths.pop();
+            params.parentRef = Storage.getFirestore().doc(paths.join('/'));
+            params.fieldName = field;
+        }
+        await model.save(params);
         return model;
     }
 

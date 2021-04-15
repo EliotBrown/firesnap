@@ -1,4 +1,4 @@
-# Firesnap - ORM for Firestore
+# ORM for Firestore
 [![NPM](https://img.shields.io/npm/v/firesnap)](https://www.npmjs.com/package/firesnap)
 [![Build Status](https://www.travis-ci.com/EliotBrown/firesnap.svg?branch=main)](https://www.travis-ci.com/EliotBrown/firesnap)
 [![Codecov](https://img.shields.io/codecov/c/github/EliotBrown/firesnap)](https://codecov.io/gh/EliotBrown/firesnap)

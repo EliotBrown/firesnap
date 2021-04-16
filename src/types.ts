@@ -140,8 +140,10 @@ export type PopulatedDocSnapshot = QueryDocumentSnapshot & {
     populated?: { [x: string]: QueryDocumentSnapshot[] },
 }
 // -------------------------------------------------------------------------
-// Model & SubModel Constructor
+// Model & SubModel
 // -------------------------------------------------------------------------
+export type IModel = Model & ModelData;
+
 export interface ModelConstructor<T = Model> {
     new(data?: ModelData, refOrSnap?: DocumentReference | QueryDocumentSnapshot): T;
     path: string;

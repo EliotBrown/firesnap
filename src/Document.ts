@@ -2,10 +2,9 @@ import { DocumentReference } from '@google-cloud/firestore';
 import { Storage } from './Metadata';
 import { Query } from './Query';
 import { Collection } from './Collection';
-import { DeleteOptions, GetOptions, ModelConstructor, ModelData, SaveOptions } from './types';
-import { Model } from './Model';
+import { DeleteOptions, GetOptions, ModelConstructor, ModelData, SaveOptions, IModel } from './types';
 
-export class Document<T extends Model> {
+export class Document<T extends IModel> {
 
     private model: ModelConstructor<T>;
     private id: string;
@@ -73,7 +72,7 @@ export class Document<T extends Model> {
     /**
      * Return a sub-collection. 
      */
-    collection(name: string): Collection<T> {
+    collection<K extends string>(name: K): Collection<T[K][0]> {
         const schema = this.model.getSchema();
         if (schema[name] === undefined) {
             throw Error(`Field ${name} is not defined in the schema`);
@@ -81,7 +80,8 @@ export class Document<T extends Model> {
         if (schema[name].type !== 'Collection') {
             throw Error(`Field ${name} is not defined as a Collection in the schema`);
         }
-        return new Collection(schema[name].model as ModelConstructor<T>, `${this.path}/${this.id}/${name}`);
+        const collection = new Collection(schema[name].model as ModelConstructor, `${this.path}/${this.id}/${name}`);
+        return collection as Collection<T[K][0]>;
     }
 
     /**

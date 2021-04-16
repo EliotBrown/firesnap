@@ -374,6 +374,51 @@ posts = await Post.find({id: 'doc-id'}).populate({
 }).limit(1).get();
 ```
 
+## Manage Sub-collections
+```javascript
+class Comment extends Model {
+    @Field() content: string;
+}
+
+class Post extends Model {
+    @Field() title: string;
+    @Collection(Comment) comments: Comment[];
+}
+
+// Add a sub-document. 
+await Post.doc('doc-id').collection('comment').add({
+    content: 'New comment',
+});
+
+// Update a sub-document.
+await Post.doc('doc-id').collection('comment').doc('sub-id').update({
+    content: 'Updated comment',
+});
+
+// Delete a sub-document.
+await Post.doc('doc-id').collection('comment').doc('sub-id').delete();
+```
+
+### 
+
+```javascript
+// Using a model instance. 
+const post = await Post.doc('doc-id').populate('comments').get();
+
+// Add a sub-document. 
+const comment = new Comment({ content: 'New comment' });
+post.comments.push(comment);
+await post.save();
+
+// Update a sub-document.
+post.comments[0].content = 'Updated comment';
+await post.save();
+
+// Delete a sub-document.
+post.comments.pop();
+await post.save();
+```
+
 ## Model Callbacks
 
 ```javascript

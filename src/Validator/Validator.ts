@@ -104,6 +104,7 @@ export class Validator {
                         if (!result.valid) {
                             continue fields;
                         }
+                        data[field] = result.data;
                     }
                     break;
                 case 'Object':

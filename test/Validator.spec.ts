@@ -195,7 +195,7 @@ describe('Validator', () => {
     });
 
     it('should exclude fields not defined in the schema from the returned data', async () => {
-        const schema: SchemaData  = {
+        const schema: SchemaData = {
             title: {
                 type: 'String',
             },
@@ -205,7 +205,7 @@ describe('Validator', () => {
     });
 
     it('should check null/undefined value (+combined with required)', async () => {
-        const schema: SchemaData  = {
+        const schema: SchemaData = {
             title: {
                 type: 'String',
             },
@@ -225,7 +225,7 @@ describe('Validator', () => {
     });
 
     it('should check nested object rules', async () => {
-        const schema: SchemaData  = {
+        const schema: SchemaData = {
             address: {
                 type: 'Object',
                 of: {
@@ -256,7 +256,7 @@ describe('Validator', () => {
                 name: { type: 'String', required: true },
             }
         }
-        const schema:SchemaData = {
+        const schema: SchemaData = {
             mainTopic: {
                 type: 'Reference',
                 model: SubModel,
@@ -304,7 +304,7 @@ describe('Validator', () => {
     // Integration Tests
     // ------------------------------------------------------------------------- 
 
-    it('should check nested model rules', async () => {
+    it('should check nested model schema', async () => {
         class SubWithSchema {
             @Field()
             field: string;
@@ -333,6 +333,14 @@ describe('Validator', () => {
         expect(await Validator.check(schema, data)).property('valid').to.be.true;
         data.nested2.field = null;
         expect(await Validator.check(schema, data)).property('valid').to.be.true;
+        // Remove extra fields.
+        const res = await Validator.check(schema, {
+            nested1: {
+                field: 'a',
+                extra: 'b',
+            },
+        });
+        expect(res.data.nested1).to.deep.equal({ field: 'a' });
     });
 
     it('should bypass Firestore Transform field values ', async () => {

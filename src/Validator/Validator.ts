@@ -108,7 +108,8 @@ export class Validator {
                     }
                     break;
                 case 'Object':
-                    if (Object.keys(rules.of).length) {
+                    // DEV: Rules for Typescript objects have no property "of".
+                    if (rules.of && Object.keys(rules.of).length) {
                         const flatSchema = Schema.flatten(rules.of as SchemaData);
                         const flatObject = flattenObject(value as Record<string, unknown>, true);
                         const result = await Validator.check(flatSchema, flatObject, options);

@@ -16,7 +16,7 @@ export function isModelConstructor(value: unknown): value is ModelConstructor {
 export function flattenObject(src: Record<string, unknown>, excludeArray: boolean, sep = '.', path = []): Record<string, unknown> {
     const obj = { ...src }; 
     return Object.keys(obj).reduce((memo, prop) => Object.assign({}, memo,
-        (obj[prop].constructor && (obj[prop].constructor === Object || (!excludeArray && obj[prop].constructor === Array)))
+        (constructorName(obj[prop]) === 'Object' || (!excludeArray && constructorName(obj[prop])=== 'Array'))
             ? flattenObject(obj[prop] as Record<string, unknown>, excludeArray, sep, path.concat([prop]))
             : { [path.concat([prop]).join(sep)]: obj[prop] }
     ), {});

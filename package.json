@@ -1,7 +1,7 @@
 {
   "name": "firesnap",
   "description": "ORM for Firestore",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "author": "Peter Brown <peter.eliot.brown@gmail.com>",
   "license": "MIT",
   "main": "lib/index.js",
@@ -24,7 +24,8 @@
     "test:file": "mocha --watch ",
     "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "build": "tsc",
-    "lint": "eslint src/** test/**"
+    "lint": "eslint src/** test/**",
+    "dev": "ts-node-dev --respawn -- playground.ts"
   },
   "mocha": {
     "require": [

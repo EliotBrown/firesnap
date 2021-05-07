@@ -3,7 +3,7 @@
 [![Build Status](https://www.travis-ci.com/EliotBrown/firesnap.svg?branch=main)](https://www.travis-ci.com/EliotBrown/firesnap)
 [![Codecov](https://img.shields.io/codecov/c/github/EliotBrown/firesnap)](https://codecov.io/gh/EliotBrown/firesnap)
 
-Firesnap is an ORM/ODM for Firestore inspired by Mongoose. Key features include data validation, population of related data, save and delete callbacks. I'm still working on the documentation and the readme doesn't cover everything but if you have any questions feel free to ask [here](https://github.com/EliotBrown/firesnap/discussions). I'm also looking for collaborators to write a complete Wiki.   
+Firesnap is an ORM/ODM for Firestore inspired by Mongoose. Key features include data validation, population of related data, save and delete callbacks.    
 
 
 ## Installation
